@@ -10,11 +10,6 @@ from bs4 import BeautifulSoup
 
 import time
 import os
-import platform
-import config
-import requests
-import shutil
-
 
 class GfwCheck:
 
@@ -36,8 +31,8 @@ class GfwCheck:
         urls_list = []
         with open(os.path.join(self.work_dir, file)) as f: 
             domains = [line.strip() for line in f if line.strip()]
-        for i in range(0, len(domains), 100):
-            urls = domains[i:i + 100]
+        for i in range(0, len(domains), domain_limit):
+            urls = domains[i:i + domain_limit]
             urls_list.append(urls)
         return urls_list
         

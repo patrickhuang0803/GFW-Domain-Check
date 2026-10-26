@@ -109,7 +109,7 @@ flowchart TD
 **環境需求：** Python 3、Google Chrome，以及與目前 Selenium 環境相容的 ChromeDriver。
 
 ```bash
-pip install selenium beautifulsoup4
+pip install selenium bs4
 python main.py
 ```
 
