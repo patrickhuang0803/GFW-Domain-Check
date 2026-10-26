@@ -46,6 +46,7 @@ flowchart TD
 - 透過 `os.path.dirname(__file__)` 取得程式所在目錄。
 - 使用 `os.path.abspath()` 轉成絕對路徑，儲存在 `self.work_dir`。
 
+
 ### `check_ready_to_check_content(self, file)`
 
 **用途：** 確認待檢查清單不是空的，避免執行沒有意義的查詢。
@@ -55,6 +56,7 @@ flowchart TD
 3. 若清單為空，顯示訊息並結束程式；否則顯示可繼續執行的訊息。
 
 **參數：** `file` — 網域清單檔名。**回傳：** 無。
+
 
 ### `split_domains(self, file)`
 
@@ -69,6 +71,7 @@ flowchart TD
 
 例如 250 筆網域會分成三批：`[100 筆, 100 筆, 50 筆]`。
 
+
 ### `browser_prepare(self)`
 
 **用途：** 建立 Selenium Chrome WebDriver。
@@ -81,6 +84,7 @@ flowchart TD
 3. 使用 webdriver.Chrome(options=chrome_options) 啟動瀏覽器。
 
 **回傳：** Chrome WebDriver 物件。`--headless` 目前為註解，預設使用可見視窗。
+
 
 ### `htool_domains_check(browser, urls_list)`
 
@@ -95,6 +99,7 @@ flowchart TD
 
 **參數：** `browser` — WebDriver 物件；`urls_list` — 分批後的網域清單。**回傳：** `list[str]`（各批 HTML）。
 
+
 ### `htool_html_text_resolve(html_texts)`
 
 **用途：** 從 HTML 中擷取網域與檢測狀態，轉為可閱讀的結果。此方法使用 `@staticmethod`。
@@ -106,6 +111,7 @@ flowchart TD
 5. 將每筆資料組合為 `網域 狀態`，以換行字元分隔。
 
 **參數：** `html_texts` — HTML 字串清單。**回傳：** `str`（彙整結果）。
+
 
 ## 安裝與執行
 
