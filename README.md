@@ -73,9 +73,12 @@ flowchart TD
 
 **用途：** 建立 Selenium Chrome WebDriver。
 
-1. 建立 `Options()`，設定 `page_load_strategy="none"`，不等待整個頁面完整載入。
-2. 設定 `--no-sandbox`、`--disable-gpu`、`--disable-dev-shm-usage`。
-3. 使用 `webdriver.Chrome(options=chrome_options)` 啟動瀏覽器。
+1. 建立 Options()，設定 page_load_strategy="none"，不等待整個頁面完整載入。
+2. 設定 Chrome 啟動參數，降低部分 Linux／容器環境中的啟動問題：
+    - `--no-sandbox`：停用 Chrome 的沙箱隔離機制。有些容器或權限受限環境可能需要，但會降低安全性；正常環境應優先保留沙箱，而非一律停用。
+    - `--disable-gpu`：停用 GPU 硬體加速，讓瀏覽器不依賴部分圖形驅動功能。某些無 GPU 或圖形環境不完整的主機可能用得到，但現代 Chrome 的 Headless 模式通常不必加上。
+    - `--disable-dev-shm-usage`：避免 Chrome 主要使用 /dev/shm 共享記憶體，改採其他暫存方式。常用於 Docker 等 /dev/shm 空間較小的環境，以降低瀏覽器因共享記憶體不足而崩潰的機率；可能有效能代價。
+3. 使用 webdriver.Chrome(options=chrome_options) 啟動瀏覽器。
 
 **回傳：** Chrome WebDriver 物件。`--headless` 目前為註解，預設使用可見視窗。
 
@@ -106,7 +109,7 @@ flowchart TD
 
 ## 安裝與執行
 
-**環境需求：** Python 3、Google Chrome，以及與目前 Selenium 環境相容的 ChromeDriver。
+**環境需求：** Python3、Google Chrome，以及與目前 Selenium 環境相容的 ChromeDriver。
 
 ```bash
 pip install selenium bs4
@@ -123,14 +126,14 @@ facebook.com
 
 程式執行後，會將網站擷取的狀態列印至終端機。**目前尚未將結果寫入 CSV 或資料庫。**
 
-> **執行前注意：** 原始 `local_library.py` 有 `import config`，若沒有 `config.py`，需先移除該未使用的匯入；另外須補上 `from selenium.common.exceptions import TimeoutException`，才能正確處理載入逾時例外。上述指令假設檔案已命名為 `main.py`、`local_library.py`。
+> **執行前注意：** 上述指令假設檔案已命名為 `main.py`、`local_library.py`。
 
 ## 已知限制與改善方向
 
 - **等待方式：** 目前查詢使用固定 `sleep()`；可改為等待結果元素更新，提高穩定性及效率。
 - **錯誤處理：** 增加載入逾時、HTML 結構變更、查詢失敗時的處理，並確保異常時也會關閉瀏覽器。
 - **結果保存：** 後續可新增 CSV／JSON 匯出、失敗批次重試及執行日誌。
-- **程式整理：** 將每批筆數改為統一設定，清理未使用的變數與匯入。
+- **程式整理：** 新增可用的變數與匯入，清理未使用的變數與匯入。
 
 ## 專案價值
 

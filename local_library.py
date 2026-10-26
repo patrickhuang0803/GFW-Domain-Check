@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import selenium.webdriver.support.ui as ui
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import TimeoutException
 
 from bs4 import BeautifulSoup
 
